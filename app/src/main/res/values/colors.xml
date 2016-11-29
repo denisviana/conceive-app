@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#870000</color>
+    <color name="colorPrimaryDark">#6b0000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorProjetos">#003780</color>
+    <color name="colorPortfolio">#A70C00</color>
+    <color name="colorAcervo">#3E005D</color>
+    <color name="colorConfig">#2C3A49</color>
+
+    <color name="colorProjetosDark">#102770</color>
+    <color name="colorPotfolioDark">#870000</color>
+    <color name="colorAcervoDark">#1E003D</color>
+    <color name="colorConfiDark">#1C2A39</color>
+</resources>
