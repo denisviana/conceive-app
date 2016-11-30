@@ -7,7 +7,6 @@
 
 
     <LinearLayout
-        android:background="#1B5E20"
         android:paddingLeft="10dp"
         android:id="@+id/backgroud_item_projeto"
         android:layout_width="match_parent"

@@ -67,7 +67,12 @@ public class Adapter_Projetos extends BaseAdapter {
         ImageButton bt_editar_projeto = (ImageButton) layout.findViewById(R.id.bt_edit_projeto);
         LinearLayout bg_item_projeto = (LinearLayout) layout.findViewById(R.id.backgroud_item_projeto);
 
-        //bg_item_projeto.setBackgroundColor(projeto.getCor());
+
+        Color color = new Color();
+
+        int cor = color.parseColor(projeto.getCor());
+
+        bg_item_projeto.setBackgroundColor(cor);
 
         nome_projeto.setText(projeto.getNome_projeto());
         nome_cliente.setText(projeto.getNome_cliente());

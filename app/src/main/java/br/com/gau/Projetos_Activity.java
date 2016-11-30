@@ -1,5 +1,6 @@
 package br.com.gau;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -47,6 +49,17 @@ public class Projetos_Activity extends AppCompatActivity {
         lista_projetos.setAdapter(new Adapter_Projetos(lista,this));
 
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+       if(item.getItemId() == R.id.menu_add_projetos){
+            startActivity(new Intent(Projetos_Activity.this,Criar_Projeto_Activity.class));
+       }
+
+        return false;
     }
 
     @Override

@@ -23,6 +23,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.gau.Dashboard_Activity" />
         </activity>
+
+        <activity
+            android:name=".Criar_Projeto_Activity" android:theme="@style/ProjetosTheme"
+            android:label="Novo Projeto"
+            android:parentActivityName=".Projetos_Activity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.gau.Projetos_Activity" />
+        </activity>
+
     </application>
 
 </manifest>

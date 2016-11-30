@@ -54,12 +54,10 @@ public class Projeto {
         this.cor = cor;
     }
 
-    public int getCor(){
-        String cor_hex = cores[randColor.nextInt(cores.length)];
+    public String getCor(){
+        //String cor = Integer.parseInt(myString.replaceFirst("#", ""), 16)
 
-        int color = Integer.parseInt(cor_hex.replaceFirst("#", ""), 16);
-
-        return color;
+        return cores[randColor.nextInt(cores.length)];
     }
 
 
