@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cozinha"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:alpha="0.80"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+
+            android:src="@drawable/gau_app_logo_nome"
+            android:layout_width="246dp"
+            android:layout_height="172dp" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <EditText
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:id="@+id/idt_email"
+                android:textColorHint="@android:color/white"
+                android:hint="E-mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:id="@+id/edt_senha"
+                android:textColorHint="@android:color/white"
+                android:hint="Senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <Button
+                android:id="@+id/bt_login"
+                android:background="#fff"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="60dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="ENTRAR"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:textColor="#fff"
+                android:text="Esqueci minha senha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:clickable="true"
+                android:id="@+id/bt_cadastrar"
+                android:layout_marginTop="5dp"
+                android:textColor="#fff"
+                android:text="Cadastrar-se"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

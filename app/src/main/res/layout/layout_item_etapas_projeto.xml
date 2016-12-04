@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:minHeight="100dp"
+    android:minWidth="160dp"
+    android:layout_width="160dp"
+    android:layout_height="100dp">
+
+    <LinearLayout
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="#F5F5F5"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+
+            <ImageView
+                android:src="@drawable/share_variant"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/folder"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nome_etapa_projeto"
+            android:textColor="#fff"
+            android:background="#263238"
+            android:gravity="center"
+            android:text="Anteprojeto"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

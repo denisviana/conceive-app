@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:padding="5dp"
-    android:layout_height="95dp"
+    android:layout_height="match_parent"
     android:minHeight="95dp">
 
 
     <LinearLayout
+
         android:paddingLeft="10dp"
         android:id="@+id/backgroud_item_projeto"
         android:layout_width="match_parent"
@@ -49,17 +50,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/bt_edit_projeto"
-            android:layout_gravity=""
-            android:background="@android:color/transparent"
-            android:layout_width="24dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_edit_white"
-            android:layout_weight="0.11" />
+       
 
     </LinearLayout>
 

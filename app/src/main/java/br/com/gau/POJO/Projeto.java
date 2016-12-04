@@ -2,12 +2,13 @@ package br.com.gau.POJO;
 
 import android.graphics.Color;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by Denis Viana on 29/11/2016.
  */
-public class Projeto {
+public class Projeto implements Serializable{
 
     private String nome_projeto;
     private String data_inicio;

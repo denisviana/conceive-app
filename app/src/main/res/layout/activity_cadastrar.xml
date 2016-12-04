@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/sala"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:padding="10dp"
+        android:alpha="0.80"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Sou:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:textColor="#fff"
+                    android:layout_marginRight="20dp"
+                    android:text="Arquiteto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_aquiteto" />
+
+                <RadioButton
+                    android:id="@+id/rb_cliente"
+                    android:textColor="#fff"
+                    android:text="Cliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RadioGroup>
+
+            <EditText
+                android:inputType="text"
+                android:maxLines="1"
+                android:id="@+id/edt_cadastro_nome"
+                android:textColorHint="#fff"
+                android:hint="Nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
+                android:id="@+id/edt_cadastro_email"
+                android:textColorHint="#fff"
+                android:hint="E-mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="number"
+                android:id="@+id/edt_cadastro_cau"
+                android:textColorHint="#fff"
+                android:hint="Registro CAU"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="number"
+                android:id="@+id/edt_cadastro_telefone"
+                android:textColorHint="#fff"
+                android:hint="Telefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:id="@+id/edt_cadastro_senha"
+                android:textColorHint="#fff"
+                android:hint="Senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:id="@+id/edt_cadastro_repete_senha"
+                android:textColorHint="#fff"
+                android:hint="Repita a senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <Button
+                android:layout_marginTop="40dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="#fff"
+                android:text="CADASTRAR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:clickable="true"
+                android:id="@+id/voltar_login"
+                android:layout_marginTop="40dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Fazer Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

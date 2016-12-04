@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:elevation="4dp"
+    android:background="@color/colorProjetos"
+    app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+    app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:gravity="center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            android:textColor="#fff"
+            style="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title"
+            android:id="@+id/titulo_projeto_interno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TableLayout
+            android:paddingBottom="5dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:src="@drawable/user"
+                    android:layout_height="24dp"
+                    android:layout_width="24dp"/>
+
+                <TextView
+                    android:id="@+id/nome_cliente_projeto_interno"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </TableRow>
+
+            <TableRow
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:src="@drawable/calendar"
+                    android:layout_height="24dp"
+                    android:layout_width="24dp"/>
+
+                <TextView
+                    android:id="@+id/data_inicio_projeto_interno"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </TableRow>
+
+
+
+        </TableLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.Toolbar>

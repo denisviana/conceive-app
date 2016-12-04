@@ -19,12 +19,12 @@ import br.com.gau.R;
  * Created by Denis Viana on 28/11/2016.
  */
 
-public class Adapter_dashboard extends BaseAdapter{
+public class Adapter_Dashboard extends BaseAdapter{
 
     private Context contexto;
     private ArrayList<Item_DashBoard> lista;
 
-    public Adapter_dashboard(Context contexto, ArrayList<Item_DashBoard> lista){
+    public Adapter_Dashboard(Context contexto, ArrayList<Item_DashBoard> lista){
         this.contexto = contexto;
         this.lista = lista;
     }

@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_busca_projetos"
+        android:id="@+id/menu_busca_referencias"
         android:icon="@drawable/search"
         android:title="Buscar"
         app:showAsAction="always"
         />
 
     <item
-        android:id="@+id/menu_add_projetos"
+        android:id="@+id/menu_add_categoria_referencias"
         android:icon="@drawable/add"
         android:title="Buscar"
         app:showAsAction="always"

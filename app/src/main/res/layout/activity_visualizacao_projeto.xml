@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Visualizacao_Projeto_Activity">
+
+    <include android:id="@+id/toolbar"
+        layout="@layout/toolbar_projetos"/>
+
+    <GridView
+        android:padding="5dp"
+        android:id="@+id/grid_etapas_projeto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:stretchMode="columnWidth"
+        />
+
+</LinearLayout>
