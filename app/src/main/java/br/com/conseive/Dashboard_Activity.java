@@ -1,4 +1,4 @@
-package br.com.gau;
+package br.com.conseive;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,8 +16,8 @@ import android.widget.ListView;
 import java.io.File;
 import java.util.ArrayList;
 
-import br.com.gau.POJO.Item_DashBoard;
-import br.com.gau.adapter.Adapter_Dashboard;
+import br.com.conseive.POJO.Item_DashBoard;
+import br.com.conseive.adapter.Adapter_Dashboard;
 
 
 public class Dashboard_Activity extends AppCompatActivity {

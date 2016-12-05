@@ -1,7 +1,7 @@
-package br.com.gau;
+package br.com.conseive;
 
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -24,10 +25,9 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
-import br.com.gau.R;
-import br.com.gau.POJO.Etapa_Projeto;
-import br.com.gau.POJO.Projeto;
-import br.com.gau.adapter.Adapter_Etapas_Projeto;
+import br.com.conseive.POJO.Etapa_Projeto;
+import br.com.conseive.POJO.Projeto;
+import br.com.conseive.adapter.Adapter_Etapas_Projeto;
 
 /**
  * Created by Denis Viana on 30/11/2016.
@@ -81,6 +81,16 @@ public class Visualizacao_Projeto_Activity extends AppCompatActivity {
             etapas.add(etapa);
         }
 
+
+        grid_etapas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Etapa_Projeto etapa = (Etapa_Projeto) adapter.getItem(i);
+                    Intent intent = new Intent(Visualizacao_Projeto_Activity.this,Etapa_Activity.class);
+                    intent.putExtra("etapa",etapa);
+                    startActivity(intent);
+            }
+        });
 
         adapter = new Adapter_Etapas_Projeto(this,etapas);
 

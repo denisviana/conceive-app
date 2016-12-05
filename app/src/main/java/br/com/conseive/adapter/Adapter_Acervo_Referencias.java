@@ -1,4 +1,4 @@
-package br.com.gau.adapter;
+package br.com.conseive.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,34 +7,33 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import br.com.gau.POJO.Etapa_Projeto;
-import br.com.gau.R;
+import br.com.conseive.POJO.Item_Acervo;
+import br.com.conseive.R;
 
 /**
- * Created by Denis Viana on 30/11/2016.
+ * Created by Denis Viana on 02/12/2016.
  */
 
-public class Adapter_Etapas_Projeto extends BaseAdapter {
+public class Adapter_Acervo_Referencias extends BaseAdapter {
 
-    private ArrayList<Etapa_Projeto> etapas;
     private Context contexto;
+    private ArrayList<Item_Acervo> lista;
 
-    public Adapter_Etapas_Projeto(Context contexto, ArrayList<Etapa_Projeto> etapas){
+    public Adapter_Acervo_Referencias(Context contexto, ArrayList<Item_Acervo> lista) {
         this.contexto = contexto;
-        this.etapas = etapas;
+        this.lista = lista;
     }
+
     @Override
     public int getCount() {
-        return etapas.size();
+        return lista.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return etapas.get(i);
+        return lista.get(i);
     }
 
     @Override
@@ -44,21 +43,22 @@ public class Adapter_Etapas_Projeto extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Etapa_Projeto etapa = etapas.get(i);
+
+        Item_Acervo item = lista.get(i);
 
         View layout;
 
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            layout = inflater.inflate(R.layout.layout_item_etapas_projeto,null);
+            layout = inflater.inflate(R.layout.item_acervo_referencias,null);
         }else
             layout = view;
 
-        TextView nome_etapa = (TextView) layout.findViewById(R.id.nome_etapa_projeto);
+        TextView nome_acervo = (TextView) layout.findViewById(R.id.nome_categoria_acervo);
 
-        nome_etapa.setText(etapa.getNome_etapa());
+        nome_acervo.setText(item.getNome());
+
 
         return layout;
     }
-
 }

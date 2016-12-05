@@ -1,4 +1,4 @@
-package br.com.gau.POJO;
+package br.com.conseive.POJO;
 
 /**
  * Created by Denis Viana on 02/12/2016.

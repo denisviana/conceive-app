@@ -1,4 +1,4 @@
-package br.com.gau.adapter;
+package br.com.conseive.adapter;
 
 import android.content.Context;
 
@@ -16,9 +16,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-import br.com.gau.POJO.Projeto;
-import br.com.gau.R;
-import br.com.gau.Visualizacao_Projeto_Activity;
+import br.com.conseive.POJO.Projeto;
+import br.com.conseive.R;
+import br.com.conseive.Visualizacao_Projeto_Activity;
 
 /**
  * Created by Denis Viana on 29/11/2016.

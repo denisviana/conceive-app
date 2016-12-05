@@ -1,6 +1,4 @@
-package br.com.gau.POJO;
-
-import android.graphics.Color;
+package br.com.conseive.POJO;
 
 import java.io.Serializable;
 import java.util.Random;

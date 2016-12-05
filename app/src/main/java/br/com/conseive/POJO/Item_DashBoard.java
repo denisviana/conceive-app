@@ -1,6 +1,6 @@
-package br.com.gau.POJO;
+package br.com.conseive.POJO;
 
-import br.com.gau.R;
+import br.com.conseive.R;
 
 /**
  * Created by Denis Viana on 28/11/2016.

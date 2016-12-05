@@ -1,10 +1,12 @@
-package br.com.gau.POJO;
+package br.com.conseive.POJO;
+
+import java.io.Serializable;
 
 /**
  * Created by Denis Viana on 30/11/2016.
  */
 
-public class Etapa_Projeto {
+public class Etapa_Projeto implements Serializable {
 
     private String nome_etapa;
 

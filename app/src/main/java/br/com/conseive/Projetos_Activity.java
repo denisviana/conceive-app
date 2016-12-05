@@ -1,27 +1,21 @@
-package br.com.gau;
+package br.com.conseive;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import br.com.gau.POJO.Projeto;
-import br.com.gau.adapter.Adapter_Projetos;
+import br.com.conseive.POJO.Projeto;
+import br.com.conseive.adapter.Adapter_Projetos;
 
 public class Projetos_Activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 

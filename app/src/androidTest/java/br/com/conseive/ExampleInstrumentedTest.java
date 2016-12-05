@@ -1,4 +1,4 @@
-package br.com.gau;
+package br.com.conseive;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

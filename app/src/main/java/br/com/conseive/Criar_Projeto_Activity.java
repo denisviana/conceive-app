@@ -1,7 +1,5 @@
-package br.com.gau;
+package br.com.conseive;
 
-import android.app.Activity;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package br.com.gau;
+package br.com.conseive;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,8 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-import br.com.gau.POJO.Item_Acervo;
-import br.com.gau.adapter.Adapter_Acervo_Referencias;
+import br.com.conseive.POJO.Item_Acervo;
+import br.com.conseive.adapter.Adapter_Acervo_Referencias;
 
 /**
  * Created by Denis Viana on 02/12/2016.

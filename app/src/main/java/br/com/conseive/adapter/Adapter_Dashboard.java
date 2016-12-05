@@ -1,10 +1,9 @@
-package br.com.gau.adapter;
+package br.com.conseive.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,14 +11,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import br.com.gau.POJO.Item_DashBoard;
-import br.com.gau.R;
+import br.com.conseive.POJO.Item_DashBoard;
+import br.com.conseive.R;
 
 /**
- * Created by Denis Viana on 28/11/2016.
+ * Created by denis on 04/12/2016.
  */
 
-public class Adapter_Dashboard extends BaseAdapter{
+public class Adapter_Dashboard extends BaseAdapter {
 
     private Context contexto;
     private ArrayList<Item_DashBoard> lista;
@@ -78,4 +77,5 @@ public class Adapter_Dashboard extends BaseAdapter{
 
         return layout;
     }
+
 }
