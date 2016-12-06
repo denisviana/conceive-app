@@ -11,8 +11,8 @@
         android:id="@+id/edit_add_etapa"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:capitalize="sentences"
-        android:singleLine="true" />
+        android:inputType="textCapSentences"
+        android:maxLines="1" />
 
     <android.support.v7.widget.SwitchCompat
         android:text="Compartilhar com o cliente"

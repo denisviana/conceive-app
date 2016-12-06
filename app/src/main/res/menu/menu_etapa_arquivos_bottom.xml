@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.conseive.Etapa_Activity">
+    <item
+        android:id="@+id/camera"
+        android:icon="@drawable/anexo"
+        android:orderInCategory="100"
+        android:title="Enviar Arquivo"
+        app:showAsAction="always" />
+
+    <item
+
+        android:id="@+id/compartilhar"
+        android:icon="@drawable/search"
+        android:orderInCategory="100"
+        android:title="Enviar Arquivo"
+        app:showAsAction="always" />
+
+
+</menu>

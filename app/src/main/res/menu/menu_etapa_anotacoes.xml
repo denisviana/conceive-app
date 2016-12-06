@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.conseive.Etapa_Activity">
+    <item
+        android:id="@+id/anexo"
+        android:icon="@drawable/ic_edit_white"
+        android:orderInCategory="100"
+        android:title="Anotaçao"
+        app:showAsAction="always" />
+
+</menu>

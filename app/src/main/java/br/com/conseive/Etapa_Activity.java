@@ -1,9 +1,10 @@
 package br.com.conseive;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -17,9 +18,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Adapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import br.com.conseive.POJO.Anotacao;
 import br.com.conseive.POJO.Etapa_Projeto;
+import br.com.conseive.adapter.Adapter_Anotacoes;
 
 public class Etapa_Activity extends AppCompatActivity {
 
@@ -31,8 +37,12 @@ public class Etapa_Activity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
+    private Toolbar toolbar_bottom;
     private Etapa_Projeto etapa;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private Adapter_Anotacoes adapter;
+    private RecyclerView list_anotacoes;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -43,11 +53,15 @@ public class Etapa_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etapa);
+        initViews();
+
 
 
         if(getIntent().getExtras()!=null){
             etapa = (Etapa_Projeto) getIntent().getSerializableExtra("etapa");
         }
+
+        toolbar_bottom.inflateMenu(R.menu.menu_etapa_arquivos_bottom);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,11 +75,26 @@ public class Etapa_Activity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        switch(mViewPager.getCurrentItem()){
+            case 1:
+                toolbar_bottom.inflateMenu(R.menu.menu_etapa_arquivos_bottom);
+                break;
+            case 2:
+
+        }
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
 
 
+
+
+    }
+
+    public void initViews(){
+        toolbar_bottom = (Toolbar) findViewById(R.id.toolbar);
+        list_anotacoes = (RecyclerView) findViewById(R.id.list_anotacoes);
     }
 
 
@@ -98,8 +127,10 @@ public class Etapa_Activity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private RecyclerView list_anotacoes;
 
         public PlaceholderFragment() {
+
         }
 
         /**
@@ -117,9 +148,88 @@ public class Etapa_Activity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_etapa, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate(R.layout.fragment_etapa_anotacoes, container, false);
+
+            list_anotacoes = (RecyclerView) rootView.findViewById(R.id.list_anotacoes);
+            list_anotacoes.setHasFixedSize(true);
+            list_anotacoes.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
+
+
+            ArrayList<Anotacao> anotacoes = new ArrayList<>();
+
+            Anotacao anotacao = new Anotacao();
+            anotacao.setNome("Denis Viana");
+            anotacao.setData("01 de dez");
+            anotacao.setAnotacao("Anotação de teste para testar o CardView no Android");
+            anotacao.setHora("10:12");
+            anotacoes.add(anotacao);
+
+            anotacao = new Anotacao();
+            anotacao.setNome("Denis Viana");
+            anotacao.setData("01 de dez");
+            anotacao.setAnotacao("Anotação de teste para testar o CardView no Android");
+            anotacao.setHora("10:12");
+            anotacoes.add(anotacao);
+
+            anotacao = new Anotacao();
+            anotacao.setNome("Denis Viana");
+            anotacao.setData("01 de dez");
+            anotacao.setAnotacao("Anotação de teste para testar o CardView no Android");
+            anotacao.setHora("10:12");
+            anotacoes.add(anotacao);
+
+            anotacao = new Anotacao();
+            anotacao.setNome("Denis Viana");
+            anotacao.setData("01 de dez");
+            anotacao.setAnotacao("Anotação de teste para testar o CardView no Android");
+            anotacao.setHora("10:12");
+            anotacoes.add(anotacao);
+
+            anotacao = new Anotacao();
+            anotacao.setNome("Denis Viana");
+            anotacao.setData("01 de dez");
+            anotacao.setAnotacao("Anotação de teste para testar o CardView no Android");
+            anotacao.setHora("10:12");
+            anotacoes.add(anotacao);
+
+            anotacao = new Anotacao();
+            anotacao.setNome("Ramon Felipe");
+            anotacao.setData("03 de dez");
+            anotacao.setAnotacao("Anotação de teste para testar o CardView no Android " +
+                    "Anotação de teste para testar o CardView no AndroidAnotação de teste para testar o " +
+                    "CardView no AndroidAnotação de teste para testar o CardView no AndroidAnotação de " +
+                    "teste para testar o CardView no AndroidAnotação de teste para testar o CardView no Android");
+            anotacao.setHora("10:12");
+            anotacoes.add(anotacao);
+
+            Adapter_Anotacoes adapter = new Adapter_Anotacoes(anotacoes,getActivity());
+
+            list_anotacoes.setAdapter(adapter);
+
+
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            list_anotacoes.setLayoutManager(layoutManager);
+
+
+
+            int pageNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+
+
+
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, pageNumber));
             return rootView;
         }
     }
