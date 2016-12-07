@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/tools"
     card_view:cardElevation="4dp"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    card_view:cardCornerRadius="6dp">
+    card_view:cardCornerRadius="4dp">
 
 
     <RelativeLayout
@@ -58,11 +58,10 @@
             android:layout_alignParentStart="true" />
 
         <TextView
-            android:layout_above="@id/data_anotacao"
-            android:layout_alignRight="@id/nome_cliente_anotacao"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/anotacao"
             android:textSize="12sp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:id="@+id/hora_comentario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

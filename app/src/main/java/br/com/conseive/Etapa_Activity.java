@@ -1,8 +1,8 @@
 package br.com.conseive;
 
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,12 +14,10 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.Adapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -38,6 +36,7 @@ public class Etapa_Activity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
 
+    private Toolbar toolbar;
     private Toolbar toolbar_bottom;
     private Etapa_Projeto etapa;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -63,10 +62,12 @@ public class Etapa_Activity extends AppCompatActivity {
 
         toolbar_bottom.inflateMenu(R.menu.menu_etapa_arquivos_bottom);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(etapa.getNome_etapa());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -75,19 +76,9 @@ public class Etapa_Activity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        switch(mViewPager.getCurrentItem()){
-            case 1:
-                toolbar_bottom.inflateMenu(R.menu.menu_etapa_arquivos_bottom);
-                break;
-            case 2:
-
-        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
-
 
 
     }
@@ -98,12 +89,7 @@ public class Etapa_Activity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_etapa_arquivos, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,52 +104,88 @@ public class Etapa_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private RecyclerView list_anotacoes;
 
-        public PlaceholderFragment() {
+    public static class Arquivos_Fragment extends Fragment{
+
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public Arquivos_Fragment(){
 
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static Arquivos_Fragment newInstance(int sectionNumber){
+            Arquivos_Fragment fragment = new Arquivos_Fragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER,sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
+            super.onCreate(savedInstanceState);
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.menu_etapa_arquivos,menu);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_etapa_arquivos,container,false);
+
+            Toolbar toolbarBottom = (Toolbar) rootView.findViewById(R.id.tb_bottom);
+            toolbarBottom.inflateMenu(R.menu.menu_etapa_arquivos);
+
+
+
+            return rootView;
+        }
+    }
+
+
+    public static class Anotacoes_Fragment extends Fragment {
+
+        private static final String ARG_SECTION_NUMBER = "section_number";
+        private RecyclerView list_anotacoes;
+
+        public Anotacoes_Fragment() {
+
+        }
+
+
+        public static Anotacoes_Fragment newInstance(int sectionNumber) {
+            Anotacoes_Fragment fragment = new Anotacoes_Fragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
+            super.onCreate(savedInstanceState);
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.menu_etapa_anotacoes,menu);
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_etapa_anotacoes, container, false);
 
             list_anotacoes = (RecyclerView) rootView.findViewById(R.id.list_anotacoes);
             list_anotacoes.setHasFixedSize(true);
-            list_anotacoes.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                }
-            });
-
 
             ArrayList<Anotacao> anotacoes = new ArrayList<>();
 
@@ -246,16 +268,20 @@ public class Etapa_Activity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position){
+                case 0: return Arquivos_Fragment.newInstance(position + 1);
+                case 1: return Anotacoes_Fragment.newInstance(position + 1);
+                default: return null;
+            }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+
             return 2;
         }
+
+
 
         @Override
         public CharSequence getPageTitle(int position) {

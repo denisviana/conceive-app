@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".Visualizacao_Projeto_Activity"
-            android:parentActivityName=".Projetos_Activity">
+            android:parentActivityName=".Projetos_Activity"
+            android:theme="@style/noactionbar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.conseive.Projetos_Activity" />
@@ -70,7 +71,6 @@
         </activity>
         <activity
             android:name=".Etapa_Activity"
-
             android:parentActivityName=".Visualizacao_Projeto_Activity"
             android:theme="@style/noactionbar">
             <meta-data

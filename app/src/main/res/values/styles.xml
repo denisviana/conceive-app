@@ -19,7 +19,7 @@
 
     </style>
 
-    <style name="noactionbar" parent="Theme.AppCompat.NoActionBar">
+    <style name="noactionbar" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="colorPrimary">@color/colorProjetos</item>
         <item name="colorPrimaryDark">@color/colorProjetosDark</item>

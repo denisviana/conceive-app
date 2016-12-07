@@ -5,9 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:elevation="4dp"
+    android:theme="@style/AppTheme.AppBarOverlay"
     android:background="@color/colorProjetos"
     app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
-    app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+    >
 
     <LinearLayout
         android:orientation="vertical"

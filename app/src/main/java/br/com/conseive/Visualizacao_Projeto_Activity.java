@@ -48,7 +48,6 @@ public class Visualizacao_Projeto_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.noactionbar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizacao_projeto);
 
