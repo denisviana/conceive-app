@@ -1,9 +1,15 @@
 package br.com.conseive;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,13 +19,15 @@ import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.conseive.POJO.Projeto;
 import br.com.conseive.adapter.Adapter_Projetos;
+import br.com.conseive.interfaces.RecyclerViewClickListener;
 
-public class Projetos_Activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Projetos_Activity extends AppCompatActivity {
 
-    private ListView lista_projetos;
+    private RecyclerView lista_projetos;
     private Adapter_Projetos adapter;
     private ArrayList<Projeto> lista;
 
@@ -45,17 +53,17 @@ public class Projetos_Activity extends AppCompatActivity implements AdapterView.
             lista.add(projeto);
         }
 
-        lista_projetos = (ListView) findViewById(R.id.list_projetos);
+        lista_projetos = (RecyclerView) findViewById(R.id.list_projetos);
 
 
         adapter = new Adapter_Projetos(lista,Projetos_Activity.this);
 
         lista_projetos.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        lista_projetos.setLayoutManager(layoutManager);
 
-        //lista_projetos.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lista_));
 
-
-        lista_projetos.setOnItemClickListener(this);
 
 
     }
@@ -75,14 +83,51 @@ public class Projetos_Activity extends AppCompatActivity implements AdapterView.
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_projetos,menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem item = menu.findItem(R.id.menu_busca_projetos);
+
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Pesquisar Projetos");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                List<Projeto> filteredProjects = filter(lista,newText);
+                adapter.setFilter(filteredProjects);
+                return true;
+            }
+        });
+
+
         return true;
     }
 
+    private List<Projeto> filter(List<Projeto> projetos, String query){
+        query = query.toLowerCase();
+        final List<Projeto> filteredProjects = new ArrayList<>();
+
+        for(Projeto projeto : projetos){
+            final String text = projeto.getNome_projeto().toLowerCase();
+            if(text.contains(query)){
+                filteredProjects.add(projeto);
+            }
+        }
+        return filteredProjects;
+    }
+
+    /*
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(Projetos_Activity.this, Visualizacao_Projeto_Activity.class);
         Projeto projeto = (Projeto)adapter.getItem(i);
         intent.putExtra("projeto",projeto);
         startActivity(intent);
-    }
+    } */
 }

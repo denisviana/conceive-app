@@ -11,6 +11,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="android.app.default_searchable"
+            android:value="br.com.conseive.Searchable_Activity"/>
+
         <activity
             android:name=".Splash_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
@@ -22,11 +26,13 @@
         </activity>
         <activity
             android:name=".Login_Activity"
-            android:theme="@style/NoactionbarLogin"></activity>
+            android:theme="@style/NoactionbarLogin"/>
         <activity
             android:name=".Cadastrar_Activity"
-            android:theme="@style/NoactionbarLogin"></activity>
-        <activity android:name=".Dashboard_Activity"></activity>
+            android:theme="@style/NoactionbarLogin"/>
+
+        <activity android:name=".Dashboard_Activity"/>
+
         <activity
             android:name=".Projetos_Activity"
             android:label="@string/title_activity_projetos_"
@@ -77,6 +83,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.conseive.Visualizacao_Projeto_Activity" />
         </activity>
+
+        <activity android:name=".Searchable_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
     </application>
 
 </manifest>

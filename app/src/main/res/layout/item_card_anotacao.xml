@@ -1,70 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/tools"
-    card_view:cardElevation="4dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    card_view:cardCornerRadius="4dp">
+    android:layout_marginTop="4dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp">
 
 
     <RelativeLayout
-        android:paddingTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingBottom="24dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:paddingTop="16dp">
 
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/avatar_cliente_notificao"
-            android:layout_alignParentLeft="true"
             android:layout_width="35dp"
-            card_view:civ_border="false"
             android:layout_height="35dp"
-            />
+            android:layout_alignParentLeft="true"
+            card_view:civ_border="false" />
 
         <TextView
-            android:layout_marginLeft="10dp"
-
             android:id="@+id/nome_cliente_anotacao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/avatar_cliente_notificao"
-            />
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/avatar_cliente_notificao" />
 
         <TextView
 
             android:id="@+id/data_anotacao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nome_cliente_anotacao"
             android:layout_alignLeft="@+id/nome_cliente_anotacao"
-            android:layout_alignStart="@+id/nome_cliente_anotacao" />
+            android:layout_alignStart="@+id/nome_cliente_anotacao"
+            android:layout_below="@+id/nome_cliente_anotacao" />
 
         <TextView
-            android:layout_marginTop="12dp"
-            android:maxLines="5"
             android:id="@+id/anotacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/avatar_cliente_notificao"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/avatar_cliente_notificao"
+            android:layout_marginTop="12dp"
+            android:maxLines="5" />
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/anotacao"
-            android:textSize="12sp"
-            android:layout_alignParentRight="true"
             android:id="@+id/hora_comentario"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/anotacao"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

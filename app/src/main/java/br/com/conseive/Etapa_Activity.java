@@ -238,8 +238,6 @@ public class Etapa_Activity extends AppCompatActivity {
 
             list_anotacoes.setAdapter(adapter);
 
-
-
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             list_anotacoes.setLayoutManager(layoutManager);

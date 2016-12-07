@@ -12,4 +12,6 @@
     <color name="colorPotfolioDark">#870000</color>
     <color name="colorAcervoDark">#1E003D</color>
     <color name="colorConfiDark">#1C2A39</color>
+
+    <color name="cinza">#9E9E9E</color>
 </resources>

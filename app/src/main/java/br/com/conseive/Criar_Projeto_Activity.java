@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import br.com.conseive.POJO.Projeto;
+
 /**
  * Created by Denis Viana on 29/11/2016.
  */
@@ -26,6 +28,12 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_criar_projeto);
 
         initViews();
+
+        if(getIntent().getExtras()!=null){
+            Projeto projeto = (Projeto) getIntent().getSerializableExtra("projeto");
+            setTitle("Editar Projeto");
+            edit_nome_projeto.setText(projeto.getNome_projeto());
+        }
 
         bt_add_projeto.setOnClickListener(this);
 
