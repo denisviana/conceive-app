@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -7,16 +7,17 @@
     android:padding="10dp"
     tools:context=".Criar_Projeto_Activity">
 
-
     <EditText
+        android:layout_alignParentTop="true"
         android:hint="Nome do Projeto"
         android:id="@+id/edit_nome_projeto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:capitalize="sentences" />
+        android:maxLines="1"
+        android:inputType="textCapSentences" />
 
     <android.support.v7.widget.SwitchCompat
+        android:layout_below="@id/edit_nome_projeto"
         android:text="Sincronizar com o Google Drive"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
         android:id="@+id/switch_projeto_drive"/>
 
     <android.support.v7.widget.SwitchCompat
+        android:layout_below="@id/switch_projeto_drive"
         android:text="Adicionar Projeto ao Portfolio"
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
@@ -31,43 +33,7 @@
         android:id="@+id/switch_projeto_portifolio"/>
 
     <Button
-        android:id="@+id/bt_add_arquiteto"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
-        android:textSize="13sp"
-        android:textColor="#fff"
-        android:background="@color/colorProjetos"
-        android:drawableLeft="@drawable/add_user"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Adicionar Arquiteto"/>
-
-    <ListView
-        android:id="@+id/list_arquitetos"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
-
-    <Button
-        android:id="@+id/bt_add_cliente"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
-        android:textSize="13sp"
-        android:textColor="#fff"
-        android:background="@color/colorProjetos"
-        android:drawableLeft="@drawable/add_user"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Adicionar Cliente"/>
-
-    <ListView
-        android:id="@+id/list_clientes"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
-
-    <Button
-        android:layout_marginTop="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:textColor="#fff"
         android:text="SALVAR"
@@ -76,4 +42,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

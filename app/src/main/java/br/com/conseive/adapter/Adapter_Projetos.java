@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -103,10 +107,13 @@ public class Adapter_Projetos extends RecyclerView.Adapter<Adapter_Projetos.MyVi
             ic_edit_projeto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    showPopup(view,getLayoutPosition());
+                    /*
                     Intent intent = new Intent(context, Criar_Projeto_Activity.class);
                     Projeto projeto = lista_projetos.get(getLayoutPosition());
                     intent.putExtra("projeto",projeto);
-                    context.startActivity(intent);
+                    context.startActivity(intent); */
                 }
             });
 
@@ -119,6 +126,37 @@ public class Adapter_Projetos extends RecyclerView.Adapter<Adapter_Projetos.MyVi
         lista_projetos = new ArrayList<>();
         lista_projetos.addAll(projetos);
         notifyDataSetChanged();
+    }
+
+
+    private void showPopup(View view, final int position) {
+        // pass the imageview id
+        View menuItemView = view.findViewById(R.id.ic_edit_projeto);
+        PopupMenu popup = new PopupMenu(context, menuItemView);
+        MenuInflater inflate = popup.getMenuInflater();
+        inflate.inflate(R.menu.menu_card_projeto, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.edit:
+                        Intent intent = new Intent(context, Criar_Projeto_Activity.class);
+                        Projeto projeto = lista_projetos.get(position);
+                        intent.putExtra("projeto",projeto);
+                        context.startActivity(intent);
+                        break;
+                    case R.id.delete:
+                        // do what you need .
+                        break;
+                    default:
+                        return false;
+                }
+                return false;
+            }
+        });
+        popup.show();
     }
 
 }

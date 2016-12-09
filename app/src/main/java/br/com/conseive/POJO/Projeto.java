@@ -3,19 +3,22 @@ package br.com.conseive.POJO;
 import java.io.Serializable;
 import java.util.Random;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Denis Viana on 29/11/2016.
  */
-public class Projeto implements Serializable{
+public class Projeto extends RealmObject implements Serializable{
 
+    private int id;
     private String nome_projeto;
     private String data_inicio;
     private String nome_cliente;
     private String etapa_atual;
+    private String caminho;
     private int cor;
-    private Random randColor = new Random();
 
-    private String[] cores = {"#9C27B0","#673AB7","#009688","#795548","#607D8B","#1B5E20","#B71C1C","#880E4F"};
+
 
     public String getNome_projeto() {
         return nome_projeto;
@@ -49,15 +52,15 @@ public class Projeto implements Serializable{
         this.etapa_atual = etapa_atual;
     }
 
-    public void setCor(int cor) {
-        this.cor = cor;
+    public String getCaminho() {
+        return caminho;
     }
 
-    public String getCor(){
-        //String cor = Integer.parseInt(myString.replaceFirst("#", ""), 16)
-
-        return cores[randColor.nextInt(cores.length)];
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
     }
+
+
 
 
 }

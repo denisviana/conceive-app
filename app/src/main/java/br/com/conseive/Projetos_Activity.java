@@ -5,17 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.view.MenuItemCompat;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,26 +22,43 @@ import java.util.List;
 
 import br.com.conseive.POJO.Projeto;
 import br.com.conseive.adapter.Adapter_Projetos;
-import br.com.conseive.interfaces.RecyclerViewClickListener;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class Projetos_Activity extends AppCompatActivity {
 
     private RecyclerView lista_projetos;
     private Adapter_Projetos adapter;
     private ArrayList<Projeto> lista;
+    private RealmConfiguration realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.projetos_activity);
 
+        Realm.init(getApplicationContext());
+        realmConfig = new RealmConfiguration.Builder().build();
+        Realm realm = Realm.getInstance(realmConfig);
+
         lista = new ArrayList<>();
 
+        RealmResults<Projeto> realmResults = realm.where(Projeto.class).findAll();
+
+        for(Projeto projeto: realmResults){
+            Projeto pj = projeto;
+            lista.add(pj);
+        }
+
+        /*
         String root_sd = Environment.getExternalStorageDirectory().toString();
 
         File dir = new File(root_sd+"/gau/");
         File[] file_list = dir.listFiles();
         String[] nomes_pastas = new String[file_list.length];
+
 
         for(int i=0;i < nomes_pastas.length;i++){
             Projeto projeto = new Projeto();
@@ -51,10 +67,9 @@ public class Projetos_Activity extends AppCompatActivity {
             projeto.setEtapa_atual("Projeto Executivo");
             projeto.setData_inicio("13/11/2016");
             lista.add(projeto);
-        }
+        }  */
 
         lista_projetos = (RecyclerView) findViewById(R.id.list_projetos);
-
 
         adapter = new Adapter_Projetos(lista,Projetos_Activity.this);
 
@@ -63,11 +78,7 @@ public class Projetos_Activity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         lista_projetos.setLayoutManager(layoutManager);
 
-
-
-
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

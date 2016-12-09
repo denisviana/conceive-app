@@ -12,6 +12,8 @@ import android.widget.Toast;
 import java.io.File;
 
 import br.com.conseive.POJO.Projeto;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by Denis Viana on 29/11/2016.
@@ -21,6 +23,7 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
 
     private EditText edit_nome_projeto;
     private Button bt_add_projeto;
+    private String root_sd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_criar_projeto);
 
         initViews();
+        root_sd = Environment.getExternalStorageDirectory().toString()+"/gau/";
 
         if(getIntent().getExtras()!=null){
             Projeto projeto = (Projeto) getIntent().getSerializableExtra("projeto");
@@ -50,6 +54,19 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
             Toast.makeText(Criar_Projeto_Activity.this,"Digite o nome do projeto", Toast.LENGTH_LONG).show();
         }else{
             new File(Environment.getExternalStorageDirectory()+"/gau/"+edit_nome_projeto.getText()).mkdir();
+            Realm.init(getApplicationContext());
+            RealmConfiguration realmConfg = new RealmConfiguration.Builder().build();
+            String nome = edit_nome_projeto.getText().toString();
+            Realm realm = Realm.getInstance(realmConfg);
+            realm.beginTransaction();
+            Projeto projeto = realm.createObject(Projeto.class);
+            projeto.setNome_cliente("Denis Viana Costa");
+            projeto.setNome_projeto(nome);
+            projeto.setCaminho(root_sd+nome);
+            projeto.setEtapa_atual("Projeto Executivo");
+            projeto.setData_inicio("13/11/2016");
+            realm.commitTransaction();
+            realm.close();
             Toast.makeText(Criar_Projeto_Activity.this,"Projeto criado com sucesso", Toast.LENGTH_LONG).show();
             finish();
         }
