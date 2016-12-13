@@ -50,9 +50,8 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     private TextView cadastrar;
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
-    private FirebaseAuth mAuth;
     private boolean signout = false;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     @Override
     protected void onResume() {
@@ -69,35 +68,19 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
         initView();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("283117934284-2uqnuj7g64j8b47sduev5g3sk3hdgj7a.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestProfile()
                 .requestEmail()
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
 
         signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setScopes(gso.getScopeArray());
         signInButton.setOnClickListener(this);
-
-
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    Log.d("TAG", "onAuthStateChanged:signed_in: "+user.getUid());
-                } else {
-                    Log.d("TAG", "onAuthStateChanged:signed_in");
-                }
-            }
-        };
-
 
 
 
@@ -129,20 +112,6 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(mAuthListener != null){
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
 
 
     @Override
@@ -150,7 +119,6 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_SIGN_IN){
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-
             handleSignInResult(result);
         }
 
@@ -167,7 +135,7 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
             editor.putString("name", account.getDisplayName());
                     editor.putString("e_mail",account.getEmail());
                             editor.putString("ID", account.getId());
-                                    editor.commit();
+                                    editor.apply();
             Intent intent = new Intent(Login_Activity.this,Dashboard_Activity.class);
             startActivity(intent);
             finish();
@@ -176,6 +144,7 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
             SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isLogin", false);
+            editor.apply();
         }
 
     }
