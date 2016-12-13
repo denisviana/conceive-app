@@ -69,12 +69,17 @@
                 android:id="@+id/bt_login"
                 android:background="#fff"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="60dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:text="ENTRAR"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
+
+            <com.google.android.gms.common.SignInButton
+
+                android:id="@+id/sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
             <TextView

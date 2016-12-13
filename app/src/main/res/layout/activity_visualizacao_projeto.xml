@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Visualizacao_Projeto_Activity">
+    tools:context=".activitys.Visualizacao_Projeto_Activity">
 
     <include android:id="@+id/toolbar"
         layout="@layout/toolbar_projetos"/>

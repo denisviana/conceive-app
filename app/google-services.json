@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "283117934284",
+    "firebase_url": "https://conceive-6b60d.firebaseio.com",
+    "project_id": "conceive-6b60d",
+    "storage_bucket": "conceive-6b60d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283117934284:android:17ce41bce83cb9ac",
+        "android_client_info": {
+          "package_name": "br.com.conceive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283117934284-qb92r976ne69hgpfi2nq8daqh29q6tdv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.conceive",
+            "certificate_hash": "B381797BAD9EE883204A1ACEDABE7AE69543BE8D"
+          }
+        },
+        {
+          "client_id": "283117934284-2uqnuj7g64j8b47sduev5g3sk3hdgj7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOXR-1_qq8SXQVCkrOw_-bz77192mblCI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283117934284-2uqnuj7g64j8b47sduev5g3sk3hdgj7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

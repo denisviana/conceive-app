@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.conseive">
+    package="br.com.conceive">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,7 @@
             android:value="br.com.conseive.Searchable_Activity"/>
 
         <activity
-            android:name=".Splash_Activity"
+            android:name=".activitys.Splash_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,66 +26,66 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Login_Activity"
+            android:name=".activitys.Login_Activity"
             android:theme="@style/NoactionbarLogin"/>
         <activity
-            android:name=".Cadastrar_Activity"
+            android:name=".activitys.Cadastrar_Activity"
             android:theme="@style/NoactionbarLogin"/>
 
-        <activity android:name=".Dashboard_Activity"/>
+        <activity android:name=".activitys.Dashboard_Activity"/>
 
         <activity
-            android:name=".Projetos_Activity"
+            android:name=".activitys.Projetos_Activity"
             android:label="@string/title_activity_projetos_"
-            android:parentActivityName=".Dashboard_Activity"
+            android:parentActivityName=".activitys.Dashboard_Activity"
             android:theme="@style/ProjetosTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.conseive.Dashboard_Activity" />
+                android:value=".activitys.Dashboard_Activity" />
         </activity>
         <activity
-            android:name=".Criar_Projeto_Activity"
+            android:name=".activitys.Criar_Projeto_Activity"
             android:label="Novo Projeto"
-            android:parentActivityName=".Projetos_Activity"
+            android:parentActivityName=".activitys.Projetos_Activity"
             android:theme="@style/ProjetosTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.conseive.Projetos_Activity" />
+                android:value=".activitys.Projetos_Activity" />
         </activity>
         <activity
-            android:name=".Visualizacao_Projeto_Activity"
-            android:parentActivityName=".Projetos_Activity"
+            android:name=".activitys.Visualizacao_Projeto_Activity"
+            android:parentActivityName=".activitys.Projetos_Activity"
             android:theme="@style/noactionbar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.conseive.Projetos_Activity" />
+                android:value=".activitys.Projetos_Activity" />
         </activity>
         <activity
-            android:name=".Meu_Portfolio_Activity"
+            android:name=".activitys.Meu_Portfolio_Activity"
             android:label="Meu Portfólio"
-            android:parentActivityName=".Dashboard_Activity">
+            android:parentActivityName=".activitys.Dashboard_Activity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.conseive.Dashboard_Activity" />
+                android:value=".activitys.Dashboard_Activity" />
         </activity>
         <activity
-            android:name=".Acervo_Referecencias_Activity"
+            android:name=".activitys.Acervo_Referecencias_Activity"
             android:label="Acervo de Referências"
-            android:parentActivityName=".Dashboard_Activity">
+            android:parentActivityName=".activitys.Dashboard_Activity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.conseive.Dashboard_Activity" />
+                android:value=".activitys.Dashboard_Activity" />
         </activity>
         <activity
-            android:name=".Etapa_Activity"
-            android:parentActivityName=".Visualizacao_Projeto_Activity"
+            android:name=".activitys.Etapa_Activity"
+            android:parentActivityName=".activitys.Visualizacao_Projeto_Activity"
             android:theme="@style/noactionbar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.conseive.Visualizacao_Projeto_Activity" />
+                android:value=".activitys.Visualizacao_Projeto_Activity" />
         </activity>
 
-        <activity android:name=".Searchable_Activity">
+        <activity android:name=".activitys.Searchable_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>

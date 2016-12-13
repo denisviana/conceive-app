@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Projetos_Activity">
+    tools:context=".activitys.Projetos_Activity">
 
 
    <android.support.v7.widget.RecyclerView
