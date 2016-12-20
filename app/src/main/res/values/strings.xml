@@ -5,4 +5,5 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="server_client_id">283117934284-2uqnuj7g64j8b47sduev5g3sk3hdgj7a.apps.googleusercontent.com</string>
+    <string name="title_activity_pos_login_">PosLogin_Activity</string>
 </resources>

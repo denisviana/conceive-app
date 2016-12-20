@@ -78,6 +78,7 @@ public class Etapa_Activity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -242,11 +243,6 @@ public class Etapa_Activity extends AppCompatActivity {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             list_anotacoes.setLayoutManager(layoutManager);
-
-
-
-            int pageNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-
 
 
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
