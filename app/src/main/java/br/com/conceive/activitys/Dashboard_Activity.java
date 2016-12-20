@@ -26,8 +26,10 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveFile;
@@ -59,20 +61,11 @@ public class Dashboard_Activity extends AppCompatActivity
     public DriveFile file;
 
 
-
-
     @Override
     protected void onStart() {
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addOnConnectionFailedListener(this)
-                .build();
-
-        mGoogleApiClient.connect();
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
+        }
         super.onStart();
     }
 
@@ -82,21 +75,16 @@ public class Dashboard_Activity extends AppCompatActivity
 
         solicitarPermissaoCriarPasta();
 
+        /*
         if(mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .addApi(Drive.API)
-                    .addScope(Drive.SCOPE_FILE)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .build();
         }
-        mGoogleApiClient.connect();
-
-        MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                .setTitle("Conceive").build();
-        Drive.DriveApi.getRootFolder(mGoogleApiClient).createFolder(
-                mGoogleApiClient,changeSet
-        ).setResultCallback(folderCreateCallback);
+        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL); */
 
         if(!new File(Environment.getExternalStorageDirectory()+"/gau").exists()){
             new File(Environment.getExternalStorageDirectory()+"/gau").mkdir();
@@ -105,8 +93,8 @@ public class Dashboard_Activity extends AppCompatActivity
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+
         if(mGoogleApiClient != null){
             mGoogleApiClient.disconnect();
         }
@@ -121,6 +109,19 @@ public class Dashboard_Activity extends AppCompatActivity
         setTitle("Dashboard");
         initViews();
 
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER), new Scope(Scopes.DRIVE_FILE))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Drive.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
 
         ArrayList<Item_DashBoard> lista_itens = new ArrayList<>();
 
@@ -175,6 +176,7 @@ public class Dashboard_Activity extends AppCompatActivity
     }
 
     private void signOut() {
+
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
@@ -248,16 +250,22 @@ public class Dashboard_Activity extends AppCompatActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+
         Toast.makeText(getApplicationContext(),"Connected",Toast.LENGTH_LONG).show();
-        MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                .setTitle("Conceive").build();
-        Drive.DriveApi.getRootFolder(mGoogleApiClient).createFolder(
-                mGoogleApiClient,changeSet
-        ).setResultCallback(folderCreateCallback);
 
-
+        if(mGoogleApiClient.isConnected()){
+            Log.i("Api Google","Esta conectado");
+            MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+                    .setTitle("Conceive").build();
+            Drive.DriveApi.getRootFolder(mGoogleApiClient).createFolder(
+                    mGoogleApiClient,changeSet
+            ).setResultCallback(folderCreateCallback);
+        }  else {
+            Log.i("Api Google","Não está conectado");
+        }
 
     }
+
 
     ResultCallback<DriveFolder.DriveFolderResult> folderCreateCallback = new ResultCallback<DriveFolder.DriveFolderResult>() {
         @Override
