@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 
+import br.com.conceive.POJO.Arquiteto;
 import br.com.conceive.R;
 
 /**
@@ -132,7 +133,15 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
                     editor.putString("e_mail",account.getEmail());
                             editor.putString("ID", account.getId());
                                     editor.apply();
-            Intent intent = new Intent(Login_Activity.this,Dashboard_Activity.class);
+            Log.i("ID Usuario",account.getId());
+            Log.i("Token Usuario",account.getIdToken());
+            Arquiteto arquiteto = new Arquiteto();
+            arquiteto.setNome(account.getDisplayName());
+            arquiteto.setEmail(account.getEmail());
+            arquiteto.setId_google(account.getId());
+            arquiteto.setUri_foto(account.getPhotoUrl().toString());
+            Intent intent = new Intent(Login_Activity.this,FinalizarCadastro_Activity.class);
+            intent.putExtra("arquiteto", arquiteto);
             startActivity(intent);
             finish();
 

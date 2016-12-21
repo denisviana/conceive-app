@@ -1,44 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:orientation="vertical"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="br.com.conceive.activitys.PosLogin_Activity">
+    tools:context="br.com.conceive.activitys.FinalizarCadastro_Activity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+
+    <TextView
+        android:id="@+id/txt_completar_cadastro"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:layout_centerInParent="true"
+        android:layout_below="@id/txt_completar_cadastro"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:id="@+id/foto_usuario_finalizar_cadastro"
+        android:layout_width="90dp"
+        android:layout_height="90dp" />
+
+    <TextView
+        android:id="@+id/txt_boas_vindas"
+        android:layout_below="@id/foto_usuario_finalizar_cadastro"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Notamos que é o seu primeiro acesso, precisamos concluir o seu cadastro."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+        <EditText
+            android:layout_marginTop="30dp"
+            android:hint="Digite seu registro no CAU"
+            android:id="@+id/edt_cau_completar_cadastro"
+            android:layout_below="@id/txt_boas_vindas"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="wrap_content" />
 
-        </android.support.v7.widget.Toolbar>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:hint="Digite seu telefone"
+            android:id="@+id/edt_telefone_completar_cadastro"
+            android:layout_below="@id/edt_cau_completar_cadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
+    <Button
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
+        android:text="SALVAR"
+        android:id="@+id/bt_completar_registro"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="wrap_content" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

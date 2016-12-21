@@ -95,10 +95,10 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity
-            android:name=".activitys.PosLogin_Activity"
-            android:label="@string/title_activity_pos_login_"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".activitys.FinalizarCadastro_Activity"
+            android:theme="@style/Noactionbar"/>
+
     </application>
 
 </manifest>
