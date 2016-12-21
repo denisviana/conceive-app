@@ -46,6 +46,7 @@ public class Projetos_Activity extends AppCompatActivity {
         lista = new ArrayList<>();
 
         RealmResults<Projeto> realmResults = realm.where(Projeto.class).findAll();
+       
 
         for(Projeto projeto: realmResults){
             Projeto pj = projeto;

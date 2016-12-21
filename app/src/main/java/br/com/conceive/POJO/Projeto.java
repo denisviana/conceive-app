@@ -1,6 +1,7 @@
 package br.com.conceive.POJO;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -12,7 +13,7 @@ public class Projeto extends RealmObject implements Serializable{
 
     private int id;
     private String nome_projeto;
-    private String data_inicio;
+    private Date data_inicio;
     private String nome_cliente;
     private String etapa_atual;
     private String caminho;
@@ -26,11 +27,11 @@ public class Projeto extends RealmObject implements Serializable{
         this.nome_projeto = nome_projeto;
     }
 
-    public String getData_inicio() {
+    public Date getData_inicio() {
         return data_inicio;
     }
 
-    public void setData_inicio(String data_inicio) {
+    public void setData_inicio(Date data_inicio) {
         this.data_inicio = data_inicio;
     }
 
@@ -73,4 +74,7 @@ public class Projeto extends RealmObject implements Serializable{
     public void setEtapas(RealmList<Etapa_Projeto> etapas) {
         this.etapas = etapas;
     }
+
+
+
 }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class Adapter_Projetos extends RecyclerView.Adapter<Adapter_Projetos.MyVi
         Projeto projeto = lista_projetos.get(position);
         holder.nome_projeto.setText(projeto.getNome_projeto());
         holder.nome_cliente_projeto.setText(projeto.getNome_cliente());
-        holder.data_inicio_projeto.setText(projeto.getData_inicio());
+        holder.data_inicio_projeto.setText(projeto.getData_inicio().toString());
         holder.etapa_atual_projeto.setText(projeto.getEtapa_atual());
     }
 
