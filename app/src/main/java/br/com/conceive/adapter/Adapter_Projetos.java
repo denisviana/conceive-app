@@ -38,7 +38,7 @@ public class Adapter_Projetos extends RecyclerView.Adapter<Adapter_Projetos.MyVi
     private Projeto projeto;
     private Context context;
     private LayoutInflater layoutInflater;
-    private static RecyclerViewClickListener mListener;
+
 
     public Adapter_Projetos(ArrayList<Projeto> lista_projetos, Context context){
         this.lista_projetos = lista_projetos;
@@ -61,7 +61,9 @@ public class Adapter_Projetos extends RecyclerView.Adapter<Adapter_Projetos.MyVi
         Projeto projeto = lista_projetos.get(position);
         holder.nome_projeto.setText(projeto.getNome_projeto());
         holder.nome_cliente_projeto.setText(projeto.getNome_cliente());
-        holder.data_inicio_projeto.setText(projeto.getData_inicio().toString());
+        SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+        String data = formataData.format(projeto.getData_inicio());
+        holder.data_inicio_projeto.setText(data);
         holder.etapa_atual_projeto.setText(projeto.getEtapa_atual());
     }
 

@@ -66,7 +66,7 @@ public class Visualizacao_Projeto_Activity extends AppCompatActivity {
             projeto = (Projeto) getIntent().getSerializableExtra("projeto");
             nome_projeto.setText(projeto.getNome_projeto());
             nome_cliente.setText(projeto.getNome_cliente());
-            data_inicio.setText(projeto.getData_inicio());
+
         }
 
         String root_sd = Environment.getExternalStorageDirectory().toString();

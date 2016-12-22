@@ -26,6 +26,7 @@ import br.com.conceive.adapter.Adapter_Projetos;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class Projetos_Activity extends AppCompatActivity {
 
@@ -45,7 +46,7 @@ public class Projetos_Activity extends AppCompatActivity {
 
         lista = new ArrayList<>();
 
-        RealmResults<Projeto> realmResults = realm.where(Projeto.class).findAll();
+        RealmResults<Projeto> realmResults = realm.where(Projeto.class).findAllSorted("data_inicio", Sort.ASCENDING);
        
 
         for(Projeto projeto: realmResults){

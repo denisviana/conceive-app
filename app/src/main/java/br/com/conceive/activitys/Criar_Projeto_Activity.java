@@ -52,7 +52,7 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
 
 
 
-
+        bt_data_inicio.setOnClickListener(this);
         bt_add_projeto.setOnClickListener(this);
 
     }
@@ -82,7 +82,7 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
 
                 @Override
                 public void onDateSet(DatePicker datePicker, int ano, int mes, int dia) {
-                    String data = String.valueOf(dia)+"/"+String.valueOf(mes)+"/"+String.valueOf(ano);
+                    String data = String.valueOf(dia)+"/"+String.valueOf(mes+1)+"/"+String.valueOf(ano);
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     try {
                         data_inicio = formatter.parse(data);
