@@ -5,13 +5,16 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Denis Viana on 29/11/2016.
  */
 public class Projeto extends RealmObject implements Serializable{
 
+    @PrimaryKey
     private int id;
+
     private String nome_projeto;
     private Date data_inicio;
     private String nome_cliente;

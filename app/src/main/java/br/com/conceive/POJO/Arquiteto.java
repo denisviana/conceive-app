@@ -2,17 +2,22 @@ package br.com.conceive.POJO;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by denis on 20/12/2016.
  */
 
-public class Arquiteto implements Serializable {
+public class Arquiteto extends RealmObject implements Serializable {
 
+    @PrimaryKey
+    private int id;
+
+    private int cau;
     private String nome;
     private String email;
     private String telefone;
-    private int cau;
-    private int id;
     private String id_google;
     private String senha;
     private String uri_foto;
