@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:src="@drawable/drive"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:text="O Conceive utiliza sua conta no Google Drive para manter seus arquivos seguros e acessíves a partir de qualquer dispositivo, além de manter tudo organizado para você. Para que isso seja possível, precisamos nos conectar com o Drive."
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_conectar_drive"
+        android:text="Conectar Agora"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_conectar_drive_depois"
+        android:text="Conectar Depois"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

@@ -99,6 +99,9 @@
         <activity android:name=".activitys.FinalizarCadastro_Activity"
             android:theme="@style/Noactionbar"/>
 
+        <activity android:name=".activitys.PermissaoDrive_Activity"
+            android:theme="@style/Noactionbar"/>
+
     </application>
 
 </manifest>

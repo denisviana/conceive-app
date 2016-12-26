@@ -61,18 +61,16 @@ public class Dashboard_Activity extends AppCompatActivity
     public DriveFile file;
 
 
-    @Override
-    protected void onStart() {
-        if(mGoogleApiClient!=null){
-            mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
-        }
-        super.onStart();
-    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.connect();
+
+        }
         solicitarPermissaoCriarPasta();
 
         /*
@@ -109,19 +107,17 @@ public class Dashboard_Activity extends AppCompatActivity
         setTitle("Dashboard");
         initViews();
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER), new Scope(Scopes.DRIVE_FILE))
+        gso = new GoogleSignInOptions.Builder()
                 .requestEmail()
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .addApi(Drive.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
+        mGoogleApiClient.connect();
 
         ArrayList<Item_DashBoard> lista_itens = new ArrayList<>();
 
@@ -177,17 +173,27 @@ public class Dashboard_Activity extends AppCompatActivity
 
     private void signOut() {
 
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("isLogin", false);
-                        editor.commit();
-                        finish();
-                    }
-                });
+        if(mGoogleApiClient.isConnected()) {
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("isLogin", false);
+                            editor.commit();
+                            finish();
+                        }
+                    });
+
+            Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+
+                        }
+                    });
+        }
     }
 
     @Override
@@ -251,31 +257,8 @@ public class Dashboard_Activity extends AppCompatActivity
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-        Toast.makeText(getApplicationContext(),"Connected",Toast.LENGTH_LONG).show();
-
-        if(mGoogleApiClient.isConnected()){
-            Log.i("Api Google","Esta conectado");
-            MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                    .setTitle("Conceive").build();
-            Drive.DriveApi.getRootFolder(mGoogleApiClient).createFolder(
-                    mGoogleApiClient,changeSet
-            ).setResultCallback(folderCreateCallback);
-        }  else {
-            Log.i("Api Google","Não está conectado");
-        }
-
     }
 
-
-    ResultCallback<DriveFolder.DriveFolderResult> folderCreateCallback = new ResultCallback<DriveFolder.DriveFolderResult>() {
-        @Override
-        public void onResult(@NonNull DriveFolder.DriveFolderResult driveFolderResult) {
-            if(!driveFolderResult.getStatus().isSuccess()){
-                Toast.makeText(getApplicationContext(), "Error while trying to create the folder", Toast.LENGTH_LONG).show();
-            }
-            Toast.makeText(getApplicationContext(), "Created a folder: " + driveFolderResult.getDriveFolder().getDriveId(), Toast.LENGTH_LONG).show();
-        }
-    };
 
     @Override
     public void onConnectionSuspended(int i) {

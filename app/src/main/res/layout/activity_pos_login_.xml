@@ -41,6 +41,8 @@
 
 
         <EditText
+            android:inputType="textCapCharacters"
+            android:maxLines="1"
             android:layout_marginTop="30dp"
             android:hint="Digite seu registro no CAU"
             android:id="@+id/edt_cau_completar_cadastro"
@@ -49,6 +51,8 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:inputType="number"
+            android:maxLines="1"
             android:layout_marginTop="5dp"
             android:hint="Digite seu telefone"
             android:id="@+id/edt_telefone_completar_cadastro"

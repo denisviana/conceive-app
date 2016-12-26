@@ -21,6 +21,7 @@ public class Arquiteto extends RealmObject implements Serializable {
     private String id_google;
     private String senha;
     private String uri_foto;
+    private String id_pasta_drive;
 
     public String getNome() {
         return nome;
@@ -84,5 +85,13 @@ public class Arquiteto extends RealmObject implements Serializable {
 
     public void setId_google(String id_google) {
         this.id_google = id_google;
+    }
+
+    public String getId_pasta_drive() {
+        return id_pasta_drive;
+    }
+
+    public void setId_pasta_drive(String id_pasta_drive) {
+        this.id_pasta_drive = id_pasta_drive;
     }
 }

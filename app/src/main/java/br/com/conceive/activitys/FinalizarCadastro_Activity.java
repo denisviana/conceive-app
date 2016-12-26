@@ -55,6 +55,7 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
             preencheInfo(arquiteto);
         }
 
+        bt_completar_registro.setOnClickListener(this);
 
     }
 
@@ -76,7 +77,7 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View view) {
         if(view == bt_completar_registro){
-            if(edt_cau.equals("")){
+            if(edt_cau.getText().toString().equalsIgnoreCase("")){
                 edt_cau.setError("Oi, esse campo é obrigatório.");
             } else if(edt_cau.getTextSize()<8){
                 edt_cau.setError("O registro do CAU precisa ter 8 dígitos");
@@ -99,9 +100,6 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
             realm.beginTransaction();
             Arquiteto arquiteto = realm.copyToRealm(arq);
             realm.commitTransaction();
-            Intent intent = new Intent(FinalizarCadastro_Activity.this,Dashboard_Activity.class);
-            startActivity(intent);
-            this.finish();
         }
 
     }
@@ -128,6 +126,12 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
                     if(response.body() != -1){
                         arquiteto.setId(response.body());
                         salvarLocal(arquiteto);
+                        Intent intent = new Intent(FinalizarCadastro_Activity.this,PermissaoDrive_Activity.class);
+                        startActivity(intent);
+                        if(progress.isShowing()){
+                            progress.cancel();
+                        }
+                        FinalizarCadastro_Activity.this.finish();
                     }else
                         Toast.makeText(getApplicationContext(),"Falha ao salvar no servidor",Toast.LENGTH_LONG).show();
                 }
@@ -138,6 +142,9 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
                 Toast.makeText(getApplicationContext(),"Falha ao salvar no servidor",Toast.LENGTH_LONG).show();
             }
         });
+        if(progress.isShowing()){
+            progress.cancel();
+        }
 
     }
 }

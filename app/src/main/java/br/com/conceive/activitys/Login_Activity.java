@@ -30,6 +30,8 @@ import com.google.android.gms.common.api.Status;
 import br.com.conceive.POJO.Arquiteto;
 import br.com.conceive.R;
 import br.com.conceive.retrofit.RetrofitInterface;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,8 +54,9 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
     private boolean signout = false;
-    private Retrofit retrofit;
     private ProgressDialog progress;
+    private Retrofit retrofit;
+    private Realm realm;
 
 
     @Override
@@ -69,6 +72,10 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
@@ -88,20 +95,6 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
 
 
-        bt_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!edt_email.getText().equals("teste") || !edt_senha.getText().equals("teste")){
-                    Intent intent = new Intent(Login_Activity.this,Dashboard_Activity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(Login_Activity.this, "Usuário ou senha inválidos", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +109,18 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     }
 
 
+    private void salvarLocal(Arquiteto arq){
+
+        Arquiteto arquiteto = realm.where(Arquiteto.class).equalTo("id_google",arq.getId_google()).findFirst();
+
+        if(arquiteto==null){
+            realm.beginTransaction();
+            arquiteto = realm.copyToRealm(arq);
+            realm.commitTransaction();
+            realm.close();
+        }
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -185,10 +190,12 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
                        if(progress.isShowing()){
                            progress.cancel();
                        }
+                       Log.i("TAG","Erro 403");
                       Toast.makeText(getApplicationContext(),"Falha na autenticação com o servidor",Toast.LENGTH_LONG).show();
                        break;
                    case 200:
-                       if(response.body()!=null){
+                       Log.i("TAG","Sucesso!");
+                       if(arquiteto!=null){
                            SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
                            SharedPreferences.Editor editor = sharedPreferences.edit();
                            editor.putBoolean("isLogin", true);
@@ -199,30 +206,35 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
                            if(progress.isShowing()){
                                progress.cancel();
                            }
+                           salvarLocal(arquiteto);
                            Intent intent = new Intent(Login_Activity.this,Dashboard_Activity.class);
                            startActivity(intent);
                            Login_Activity.this.finish();
-                       }else{
-                           Arquiteto arquiteto = new Arquiteto();
-                           arquiteto.setNome(account.getDisplayName());
-                           arquiteto.setEmail(account.getEmail());
-                           arquiteto.setId_google(account.getId());
-                           arquiteto.setUri_foto(account.getPhotoUrl().toString());
-                           if(progress.isShowing()){
-                               progress.cancel();
-                           }
-                           Intent intent = new Intent(Login_Activity.this,FinalizarCadastro_Activity.class);
-                           intent.putExtra("token",account.getIdToken());
-                           intent.putExtra("arquiteto", arquiteto);
-                           startActivity(intent);
-                           finish();
                        }
+                       break;
+                   case 204:
+                       arquiteto = new Arquiteto();
+                       arquiteto.setNome(account.getDisplayName());
+                       arquiteto.setEmail(account.getEmail());
+                       arquiteto.setId_google(account.getId());
+                       arquiteto.setUri_foto(account.getPhotoUrl().toString());
+
+                       if(progress.isShowing()){
+                           progress.cancel();
+                       }
+                       Intent intent = new Intent(Login_Activity.this,FinalizarCadastro_Activity.class);
+                       intent.putExtra("token",account.getIdToken());
+                       intent.putExtra("arquiteto", arquiteto);
+                       startActivity(intent);
+                       finish();
+                       break;
 
                 }
             }
 
             @Override
             public void onFailure(Call<Arquiteto> call, Throwable t) {
+                Log.i("TAG","Falha comunicação com o WebService");
                 Toast.makeText(getApplicationContext(),"Falha na comunicação com o servidor",Toast.LENGTH_LONG).show();
             }
         });

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +12,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
 
 import java.io.File;
 import java.text.ParseException;
@@ -27,7 +32,8 @@ import io.realm.RealmConfiguration;
  * Created by Denis Viana on 29/11/2016.
  */
 
-public class Criar_Projeto_Activity extends AppCompatActivity implements View.OnClickListener{
+public class Criar_Projeto_Activity extends AppCompatActivity implements View.OnClickListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private EditText edit_nome_projeto;
     private Button bt_add_projeto;
@@ -35,11 +41,32 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
     private Button bt_data_inicio;
     static final int DATE_DIALOG_ID = 0;
     private Date data_inicio;
+    private GoogleApiClient mGoogleApiClient;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.disconnect();
+        }
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_projeto);
+
 
         initViews();
         root_sd = Environment.getExternalStorageDirectory().toString()+"/gau/";
@@ -49,6 +76,14 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
             setTitle("Editar Projeto");
             edit_nome_projeto.setText(projeto.getNome_projeto());
         }
+
+        mGoogleApiClient = new GoogleApiClient.Builder()
+                .addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)
+                .addScope(Drive.SCOPE_APPFOLDER)
+                .build();
+
+        mGoogleApiClient.connect();
 
 
 
@@ -121,6 +156,21 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
         }else if(view == bt_data_inicio){
             showDialog(DATE_DIALOG_ID);
         }
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }
