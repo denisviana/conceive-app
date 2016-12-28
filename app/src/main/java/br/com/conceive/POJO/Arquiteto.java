@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
  * Created by denis on 20/12/2016.
@@ -15,9 +16,12 @@ public class Arquiteto extends RealmObject implements Serializable {
     private int id;
 
     private int cau;
+    @Required
     private String nome;
+    @Required
     private String email;
     private String telefone;
+    @Required
     private String id_google;
     private String senha;
     private String uri_foto;

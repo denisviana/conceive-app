@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -16,7 +17,7 @@ import retrofit2.http.Path;
 
 public interface RetrofitInterface {
 
-    String BASE_URL = "http://192.168.1.105:8081/Conceive_WebService/rest/";
+    String BASE_URL = "http://192.168.0.183:8081/Conceive_WebService/rest/";
 
     @GET("arquiteto/listaTodos")
     Call<List<Arquiteto>> listaArquitetos(@Header("token") String token);
@@ -26,6 +27,9 @@ public interface RetrofitInterface {
 
     @POST("arquiteto/cadastrar")
     Call<Integer> cadastrarArquiteto(@Header("token") String token, @Body Arquiteto arquiteto);
+
+    @PUT("arquiteto/atualiza")
+    Call<Integer> atualizaArquiteto(@Header("token") String token, @Body Arquiteto arquiteto);
 
 
 }

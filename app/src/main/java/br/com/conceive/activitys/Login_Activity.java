@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,23 +28,22 @@ import com.google.android.gms.common.api.Status;
 
 import br.com.conceive.POJO.Arquiteto;
 import br.com.conceive.R;
-import br.com.conceive.retrofit.RetrofitInterface;
+import br.com.conceive.dao.ArquitetoDAO;
+import br.com.conceive.dao.ArquitetoRetrofit;
+import br.com.conceive.dao.RetrofitWebService;
 import io.realm.Realm;
-import io.realm.RealmResults;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by denis on 04/12/2016.
  */
-public class Login_Activity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+public class Login_Activity extends RetrofitWebService implements GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener{
 
     private final static int RC_SIGN_IN = 777;
+    private final static String TAG = "Login Activity: ";
 
     private EditText edt_email;
     private EditText edt_senha;
@@ -54,9 +52,9 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
     private boolean signout = false;
-    private ProgressDialog progress;
-    private Retrofit retrofit;
+    private ArquitetoDAO arquitetoDAO;
     private Realm realm;
+    private ProgressDialog progress;
 
 
     @Override
@@ -92,8 +90,9 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
 
-
-
+        progress = new ProgressDialog(this);
+        progress.setTitle("Aguarde...");
+        progress.setIndeterminate(true);
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,17 +108,14 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     }
 
 
-    private void salvarLocal(Arquiteto arq){
+    private boolean salvarLocal(Arquiteto arq){
 
-        Arquiteto arquiteto = realm.where(Arquiteto.class).equalTo("id_google",arq.getId_google()).findFirst();
+        arquitetoDAO = new ArquitetoDAO(this);
 
-        if(arquiteto==null){
-            realm.beginTransaction();
-            arquiteto = realm.copyToRealm(arq);
-            realm.commitTransaction();
-            realm.close();
+        if(!arquitetoDAO.arquitetoExiste(arq.getId_google())){
+             return arquitetoDAO.novoArquiteto(arq);
         }
-
+        return false;
     }
 
     @Override
@@ -165,80 +161,74 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
     private void validaUsuario(final GoogleSignInAccount account){
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(RetrofitInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        showProgress();
 
-        String token = account.getIdToken();
-        String id_arquiteto = account.getId();
-
-        progress = new ProgressDialog(this);
-        progress.setIndeterminate(true);
-        progress.setTitle("Aguarde...");
-        progress.show();
-
-        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
-        Call<Arquiteto> requestArquiteto = retrofitInterface.buscaArquitetoPorID(token,id_arquiteto);
+        Call<Arquiteto> requestArquiteto = getRetrofitInterface().
+                buscaArquitetoPorID(account.getIdToken(),account.getId());
 
         requestArquiteto.enqueue(new Callback<Arquiteto>() {
             @Override
             public void onResponse(Call<Arquiteto> call, Response<Arquiteto> response) {
-                Arquiteto arquiteto = response.body();
-               switch(response.code()){
-                   case 403:
-                       if(progress.isShowing()){
-                           progress.cancel();
-                       }
-                       Log.i("TAG","Erro 403");
-                      Toast.makeText(getApplicationContext(),"Falha na autenticação com o servidor",Toast.LENGTH_LONG).show();
-                       break;
-                   case 200:
-                       Log.i("TAG","Sucesso!");
-                       if(arquiteto!=null){
-                           SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
-                           SharedPreferences.Editor editor = sharedPreferences.edit();
-                           editor.putBoolean("isLogin", true);
-                           editor.putString("name", account.getDisplayName());
-                           editor.putString("e_mail",account.getEmail());
-                           editor.putString("ID", account.getId());
-                           editor.apply();
-                           if(progress.isShowing()){
-                               progress.cancel();
-                           }
-                           salvarLocal(arquiteto);
-                           Intent intent = new Intent(Login_Activity.this,Dashboard_Activity.class);
-                           startActivity(intent);
-                           Login_Activity.this.finish();
-                       }
-                       break;
-                   case 204:
-                       arquiteto = new Arquiteto();
-                       arquiteto.setNome(account.getDisplayName());
-                       arquiteto.setEmail(account.getEmail());
-                       arquiteto.setId_google(account.getId());
-                       arquiteto.setUri_foto(account.getPhotoUrl().toString());
+                switch(response.code()){
+                    case OK:
+                        Log.i(TAG,"Sucesso");
+                        if(response.body()!=null){
+                            SharedPreferences sharedPreferences = getSharedPreferences("APP", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("isLogin", true);
+                            editor.putString("name", account.getDisplayName());
+                            editor.putString("e_mail",account.getEmail());
+                            editor.putString("ID", account.getId());
+                            editor.apply();
 
-                       if(progress.isShowing()){
-                           progress.cancel();
-                       }
-                       Intent intent = new Intent(Login_Activity.this,FinalizarCadastro_Activity.class);
-                       intent.putExtra("token",account.getIdToken());
-                       intent.putExtra("arquiteto", arquiteto);
-                       startActivity(intent);
-                       finish();
-                       break;
+                            final Arquiteto arquiteto =  response.body();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(salvarLocal(arquiteto)){
+                                        Log.i(TAG,"Arquiteto salvo no BD local");
+                                    }else{
+                                        Log.i(TAG,"Arquiteto não foi salvo no BD local");
+                                    }
+                                }
+                            }).start();
 
+                            Intent intent = new Intent(Login_Activity.this,Dashboard_Activity.class);
+                            startActivity(intent);
+                            finishProgress();
+                            Login_Activity.this.finish();
+                        }
+                        break;
+                    case NO_CONTENT:
+                        Log.i(TAG,"Sem Conteúdo");
+                        Arquiteto arquiteto = new Arquiteto();
+                        arquiteto.setNome(account.getDisplayName());
+                        arquiteto.setEmail(account.getEmail());
+                        arquiteto.setId_google(account.getId());
+                        arquiteto.setUri_foto(account.getPhotoUrl().toString());
+
+                        Intent intent = new Intent(Login_Activity.this,FinalizarCadastro_Activity.class);
+                        intent.putExtra("token",account.getIdToken());
+                        intent.putExtra("arquiteto", arquiteto);
+                        startActivity(intent);
+                        finishProgress();
+                        Login_Activity.this.finish();
+                        break;
+                    case FORBBIDEN:
+                        Log.i(TAG,"Validação de token negada");
+                        Toast.makeText(getApplicationContext(),"Validação de token negada",Toast.LENGTH_LONG).show();
+                        break;
                 }
             }
 
             @Override
             public void onFailure(Call<Arquiteto> call, Throwable t) {
-                Log.i("TAG","Falha comunicação com o WebService");
-                Toast.makeText(getApplicationContext(),"Falha na comunicação com o servidor",Toast.LENGTH_LONG).show();
+                Log.i(TAG,"Falha na comuninação com o WebService");
+                finishProgress();
             }
         });
 
+        finishProgress();
     }
 
     public void initView(){
@@ -254,7 +244,6 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
 
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -267,6 +256,18 @@ public class Login_Activity extends AppCompatActivity implements GoogleApiClient
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    public void showProgress(){
+        if(!progress.isShowing()){
+            progress.show();
+        }
+    }
+
+    public void finishProgress(){
+        if(progress.isShowing()){
+            progress.dismiss();
+        }
     }
 
 }

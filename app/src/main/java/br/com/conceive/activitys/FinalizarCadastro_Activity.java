@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +18,9 @@ import com.squareup.picasso.Picasso;
 
 import br.com.conceive.POJO.Arquiteto;
 import br.com.conceive.R;
+import br.com.conceive.dao.ArquitetoDAO;
+import br.com.conceive.dao.ArquitetoRetrofit;
+import br.com.conceive.dao.RetrofitWebService;
 import br.com.conceive.retrofit.RetrofitInterface;
 import io.realm.Realm;
 import retrofit2.Call;
@@ -29,17 +33,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by denis on 20/12/2016.
  */
 
-public class FinalizarCadastro_Activity extends AppCompatActivity implements View.OnClickListener{
+public class FinalizarCadastro_Activity extends RetrofitWebService implements View.OnClickListener{
 
+    private static final String TAG = "Finalizar Cadastro: ";
     private Arquiteto arquiteto;
     private CircularImageView imagem_perfil;
     private TextView nome_usuario;
     private EditText edt_cau;
     private EditText edt_telefone;
     private Button bt_completar_registro;
-    private Retrofit retrofit;
-    private ProgressDialog progress;
+    private ArquitetoDAO arquitetoDAO;
     private String token;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +61,10 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
         }
 
         bt_completar_registro.setOnClickListener(this);
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Aguarde...");
+        progress.setIndeterminate(true);
 
     }
 
@@ -91,60 +100,79 @@ public class FinalizarCadastro_Activity extends AppCompatActivity implements Vie
         }
     }
 
-    private void salvarLocal(Arquiteto arq){
+    private boolean salvarLocal(Arquiteto arquiteto){
 
-        Realm.init(this);
-        Realm realm = Realm.getDefaultInstance();
+        arquitetoDAO = new ArquitetoDAO(this);
 
         if(arquiteto!=null){
-            realm.beginTransaction();
-            Arquiteto arquiteto = realm.copyToRealm(arq);
-            realm.commitTransaction();
-        }
-
+            return arquitetoDAO.novoArquiteto(arquiteto);
+        } else
+        return false;
     }
 
     private void cadastrarArquiteto(String token, final Arquiteto arquiteto){
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(RetrofitInterface.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        showProgress();
 
-        progress = new ProgressDialog(this);
-        progress.setIndeterminate(true);
-        progress.setTitle("Aguarde...");
-        progress.show();
-
-        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
-        Call<Integer> requestArquiteto = retrofitInterface.cadastrarArquiteto(token,arquiteto);
+        Call<Integer> requestArquiteto = getRetrofitInterface().cadastrarArquiteto(token,arquiteto);
 
         requestArquiteto.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if(response.code()==200){
-                    if(response.body() != -1){
-                        arquiteto.setId(response.body());
-                        salvarLocal(arquiteto);
-                        Intent intent = new Intent(FinalizarCadastro_Activity.this,PermissaoDrive_Activity.class);
-                        startActivity(intent);
-                        if(progress.isShowing()){
-                            progress.cancel();
+                switch(response.code()){
+                    case OK:
+                        Log.i(TAG,"Sucesso");
+                        if(response.body() != -1){
+                            arquiteto.setId(response.body());
+
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(salvarLocal(arquiteto)){
+                                        Log.i(TAG,"Arquiteto salvo no BD local");
+                                    }else{
+                                        Log.i(TAG,"Arquiteto não foi salvo no BD local");
+                                    }
+                                }
+                            }).start();
+
+
+                            Intent intent = new Intent(FinalizarCadastro_Activity.this,PermissaoDrive_Activity.class);
+                            startActivity(intent);
+                            finishProgress();
+                            FinalizarCadastro_Activity.this.finish();
                         }
-                        FinalizarCadastro_Activity.this.finish();
-                    }else
-                        Toast.makeText(getApplicationContext(),"Falha ao salvar no servidor",Toast.LENGTH_LONG).show();
+                        break;
+                    case NO_CONTENT:
+                        Log.i(TAG,"Sem Conteúdo");
+                        finishProgress();
+                        break;
+                    case FORBBIDEN:
+                        Log.i(TAG,"Validação de token negada");
+                        finishProgress();
+                        break;
                 }
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Falha ao salvar no servidor",Toast.LENGTH_LONG).show();
+                Log.i(TAG,"Falha na comuninação com o WebService");
+                finishProgress();
             }
         });
-        if(progress.isShowing()){
-            progress.cancel();
-        }
 
+        finishProgress();
+    }
+
+    public void showProgress(){
+        if(!progress.isShowing()){
+            progress.show();
+        }
+    }
+
+    public void finishProgress(){
+        if(progress.isShowing()){
+            progress.dismiss();
+        }
     }
 }

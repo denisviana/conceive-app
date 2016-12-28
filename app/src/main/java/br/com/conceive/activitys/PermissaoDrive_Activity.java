@@ -60,6 +60,13 @@ public class PermissaoDrive_Activity extends AppCompatActivity implements View.O
 
     }
 
+    @Override
+    protected void onPause() {
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.disconnect();
+        }
+        super.onPause();
+    }
 
     private void initViews(){
         bt_conecta_drive = (Button) findViewById(R.id.bt_conectar_drive);

@@ -77,7 +77,7 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
             edit_nome_projeto.setText(projeto.getNome_projeto());
         }
 
-        mGoogleApiClient = new GoogleApiClient.Builder()
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE)
                 .addScope(Drive.SCOPE_APPFOLDER)
