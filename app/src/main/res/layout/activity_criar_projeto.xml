@@ -16,18 +16,11 @@
         android:maxLines="1"
         android:inputType="textCapSentences" />
 
-    <android.support.v7.widget.SwitchCompat
-        android:layout_below="@id/edit_nome_projeto"
-        android:text="Sincronizar com o Google Drive"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/switch_projeto_drive"/>
 
     <android.support.v7.widget.SwitchCompat
-        android:layout_below="@id/switch_projeto_drive"
+        android:layout_below="@id/edit_nome_projeto"
         android:text="Adicionar Projeto ao Portfolio"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/switch_projeto_portifolio"/>
@@ -35,12 +28,13 @@
     <TextView
         android:id="@+id/data"
         android:text="Data de início:"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_below="@id/switch_projeto_portifolio"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"/>
 
     <Button
+        android:layout_marginTop="5dp"
         android:id="@+id/bt_data_inicio_projeto"
         android:text="DEFINIR DATA"
         android:layout_below="@id/data"

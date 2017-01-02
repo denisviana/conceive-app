@@ -110,7 +110,7 @@ public class FinalizarCadastro_Activity extends RetrofitWebService implements Vi
         return false;
     }
 
-    private void cadastrarArquiteto(String token, final Arquiteto arquiteto){
+    private void cadastrarArquiteto(final String token, final Arquiteto arquiteto){
 
         showProgress();
 
@@ -136,8 +136,9 @@ public class FinalizarCadastro_Activity extends RetrofitWebService implements Vi
                                 }
                             }).start();
 
-
                             Intent intent = new Intent(FinalizarCadastro_Activity.this,PermissaoDrive_Activity.class);
+                            intent.putExtra("arquiteto",arquiteto);
+                            intent.putExtra("token",token);
                             startActivity(intent);
                             finishProgress();
                             FinalizarCadastro_Activity.this.finish();
@@ -156,7 +157,7 @@ public class FinalizarCadastro_Activity extends RetrofitWebService implements Vi
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
-                Log.i(TAG,"Falha na comuninação com o WebService");
+                Log.i(TAG,"Falha na comunicação com o WebService");
                 finishProgress();
             }
         });

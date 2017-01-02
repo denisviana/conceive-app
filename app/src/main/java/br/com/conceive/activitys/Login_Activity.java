@@ -200,7 +200,7 @@ public class Login_Activity extends RetrofitWebService implements GoogleApiClien
                         }
                         break;
                     case NO_CONTENT:
-                        Log.i(TAG,"Sem Conteúdo");
+                        Log.i(TAG,"Objeto arquiteo sem Conteúdo");
                         Arquiteto arquiteto = new Arquiteto();
                         arquiteto.setNome(account.getDisplayName());
                         arquiteto.setEmail(account.getEmail());

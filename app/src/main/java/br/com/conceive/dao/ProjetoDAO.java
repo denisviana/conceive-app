@@ -3,29 +3,30 @@ package br.com.conceive.dao;
 import android.content.Context;
 
 import br.com.conceive.POJO.Arquiteto;
+import br.com.conceive.POJO.Projeto;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
 /**
- * Created by Denis Viana on 26/12/2016.
+ * Created by denis on 27/12/2016.
  */
 
-public class ArquitetoDAO  {
+public class ProjetoDAO {
 
     private Context context;
     private Realm realm;
 
-    public ArquitetoDAO(Context context){
+    public ProjetoDAO(Context context){
         this.context = context;
         Realm.init(context);
         realm = Realm.getDefaultInstance();
     }
 
-    public boolean novoArquiteto(Arquiteto arquiteto){
+    public boolean novoProjeto(Projeto projeto){
         try{
             realm.beginTransaction();
-            realm.copyToRealm(arquiteto);
+            realm.copyToRealmOrUpdate(projeto);
             realm.commitTransaction();
             realm.close();
             return true;
@@ -35,13 +36,10 @@ public class ArquitetoDAO  {
         }
     }
 
-    public boolean atualizarArquiteto(Arquiteto arquiteto, String id_google){
-        Arquiteto editArq = realm.where(Arquiteto.class)
-                .equalTo("id_google",id_google)
-                .findFirst();
+    public boolean atualizarProjeto(Projeto projeto){
         try{
             realm.beginTransaction();
-            editArq = realm.copyToRealmOrUpdate(arquiteto);
+            realm.copyToRealmOrUpdate(projeto);
             realm.commitTransaction();
             realm.close();
             return true;
@@ -51,19 +49,19 @@ public class ArquitetoDAO  {
         }
     }
 
-    public Arquiteto buscaArquiteto(String id_google){
-        Arquiteto arquiteto = realm.where(Arquiteto.class)
-                .equalTo("id_google", id_google)
+    public Projeto buscaProjeto(String id){
+        Projeto projeto = realm.where(Projeto.class)
+                .equalTo("id", id)
                 .findFirst();
-        return arquiteto;
+        return projeto;
     }
 
-    public boolean arquitetoExiste(String id_google){
+    public boolean ProjetoExiste(String id){
         try{
-            RealmResults<Arquiteto> arquitetos = realm.where(Arquiteto.class)
-                    .equalTo("id_google", id_google)
+            RealmResults<Projeto> projetos = realm.where(Projeto.class)
+                    .equalTo("id", id)
                     .findAll();
-            if(arquitetos.size()>0){
+            if(projetos.size()>0){
                 return true;
             } else {
                 return false;
@@ -73,5 +71,4 @@ public class ArquitetoDAO  {
             return false;
         }
     }
-
 }

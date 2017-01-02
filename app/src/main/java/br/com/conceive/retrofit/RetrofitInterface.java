@@ -17,7 +17,7 @@ import retrofit2.http.Path;
 
 public interface RetrofitInterface {
 
-    String BASE_URL = "http://192.168.0.183:8081/Conceive_WebService/rest/";
+    String BASE_URL = "http://192.168.1.101:8081/Conceive_WebService/rest/";
 
     @GET("arquiteto/listaTodos")
     Call<List<Arquiteto>> listaArquitetos(@Header("token") String token);

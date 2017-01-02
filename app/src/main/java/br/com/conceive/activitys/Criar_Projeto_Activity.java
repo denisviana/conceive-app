@@ -7,15 +7,26 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveFolder;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.MetadataChangeSet;
 
 import java.io.File;
 import java.text.ParseException;
@@ -23,8 +34,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.conceive.POJO.Arquiteto;
 import br.com.conceive.POJO.Projeto;
 import br.com.conceive.R;
+import br.com.conceive.dao.ArquitetoDAO;
+import br.com.conceive.dao.RetrofitWebService;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -32,9 +46,10 @@ import io.realm.RealmConfiguration;
  * Created by Denis Viana on 29/11/2016.
  */
 
-public class Criar_Projeto_Activity extends AppCompatActivity implements View.OnClickListener,
+public class Criar_Projeto_Activity extends RetrofitWebService implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
+    private final String TAG = "Criar Projeto Activity";
     private EditText edit_nome_projeto;
     private Button bt_add_projeto;
     private String root_sd;
@@ -42,23 +57,25 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
     static final int DATE_DIALOG_ID = 0;
     private Date data_inicio;
     private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInAccount account;
+    private Arquiteto arquiteto;
+    private ArquitetoDAO arquitetoDAO;
 
     @Override
     protected void onResume() {
         super.onResume();
 
         if(mGoogleApiClient!=null){
-            mGoogleApiClient.connect();
+            mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
         }
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
-
         if(mGoogleApiClient!=null){
             mGoogleApiClient.disconnect();
         }
+        super.onPause();
     }
 
 
@@ -77,15 +94,21 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
             edit_nome_projeto.setText(projeto.getNome_projeto());
         }
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Drive.API)
-                .addScope(Drive.SCOPE_FILE)
-                .addScope(Drive.SCOPE_APPFOLDER)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER), new Scope(Scopes.DRIVE_FILE))
+                .requestProfile()
+                .requestEmail()
                 .build();
 
-        mGoogleApiClient.connect();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .addApi(Drive.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
-
+        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
 
         bt_data_inicio.setOnClickListener(this);
         bt_add_projeto.setOnClickListener(this);
@@ -128,6 +151,8 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
                 }
             };
 
+
+
     @Override
     public void onClick(View view) {
 
@@ -137,6 +162,15 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
             }else{
                 new File(Environment.getExternalStorageDirectory()+"/gau/"+edit_nome_projeto.getText()).mkdir();
                 Realm.init(getApplicationContext());
+
+                if(mGoogleApiClient.isConnected() && arquiteto!=null){
+                    DriveId sFolderId = DriveId.decodeFromString(arquiteto.getId_pasta_drive());
+                    DriveFolder folder = Drive.DriveApi.getFolder(mGoogleApiClient, sFolderId);
+                    MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+                            .setTitle(edit_nome_projeto.getText().toString()).build();
+                    folder.createFolder(mGoogleApiClient, changeSet).setResultCallback(folderCreatedCallback);
+                }
+
                 RealmConfiguration realmConfg = new RealmConfiguration.Builder().build();
 
                 String nome = edit_nome_projeto.getText().toString();
@@ -159,9 +193,34 @@ public class Criar_Projeto_Activity extends AppCompatActivity implements View.On
 
     }
 
+    ResultCallback<DriveFolder.DriveFolderResult> folderCreatedCallback = new
+            ResultCallback<DriveFolder.DriveFolderResult>() {
+                @Override
+                public void onResult(DriveFolder.DriveFolderResult result) {
+                    if (!result.getStatus().isSuccess()) {
+                        Log.i(TAG,"Problem while trying to create a folder");
+                        return;
+                    }
+                    Log.i(TAG,"Subpasta criada com sucesso");
+                }
+            };
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
+       Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient).setResultCallback(new ResultCallback<GoogleSignInResult>() {
+           @Override
+           public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+               Log.i(TAG,"Conectado");
+               account = googleSignInResult.getSignInAccount();
+               Log.i(TAG,"Usuário logado id: "+account.getId());
+               arquitetoDAO = new ArquitetoDAO(Criar_Projeto_Activity.this);
+               arquiteto = arquitetoDAO.buscaArquiteto(account.getId());
+
+
+
+           }
+       });
     }
 
     @Override
